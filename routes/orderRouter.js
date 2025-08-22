@@ -25,7 +25,7 @@ router
   .get(
     authMiddlewers.restrictTo("delivery"),
     dynamicMiddleware.addQuery("delivery", "userId"),
-    dynamicMiddleware.addQuery("status", "توصيل"),
+    dynamicMiddleware.addQuery("status.ar", "توصيل"),
     orderController.getAllOrder
   );
 router
@@ -93,9 +93,10 @@ router
   .route("/:id/paid") //من اجل تاكيد توصيل الطلب وستلام المبلغ من المستخدم في حال التوصيل
   .patch(
     authMiddlewers.restrictTo("delivery"),
-    checkOwner(Order, "delivery"),
+    checkOwner(Order, "delivery","id"),
     dynamicMiddleware.addVarBody("paid", "true"),
-    dynamicMiddleware.addVarBody("status", "مكتمل"),
+    dynamicMiddleware.addVarBody("status.ar", "مكتمل"),
+      dynamicMiddleware.addVarBody("status.en", "Completed"),
     orderController.updateOrder
   );
 router
